@@ -1,9 +1,12 @@
 import axios from "axios";
 
-const API_URL = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+let rawApiUrl = import.meta.env.VITE_API_URL || "http://localhost:5000/api";
+if (rawApiUrl && !rawApiUrl.endsWith("/api") && !rawApiUrl.endsWith("/api/")) {
+  rawApiUrl = `${rawApiUrl.replace(/\/+$/, "")}/api`;
+}
 
 export const api = axios.create({
-  baseURL: API_URL,
+  baseURL: rawApiUrl,
 });
 
 const TOKEN_KEY = "synapse_studio_token";
